@@ -204,7 +204,7 @@ function App() {
           </main>
           <footer>
             <h6>from</h6>
-            <h3>KISEOK</h3>
+            <h3>LG Electronics</h3>
           </footer>
         </div>
       }
