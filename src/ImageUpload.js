@@ -4,7 +4,7 @@ import firebase from "firebase"
 import { storage, db } from "./firebase"
 import './ImageUpload.css'
 
-function ImageUpload({username, onClose}) {
+function ImageUpload({username, onComplete}) {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [caption, setCaption] = useState('');
@@ -32,7 +32,7 @@ function ImageUpload({username, onClose}) {
           // Error function ...
           console.log(error);
           alert(error.message);
-          onClose();
+          onComplete();
         },
         () => {
           // complete function ...
@@ -52,7 +52,7 @@ function ImageUpload({username, onClose}) {
               setProgress(0);
               setCaption('');
               setImage(null);
-              onClose();
+              onComplete();
             });
         }
       );

@@ -53,9 +53,11 @@ function App() {
       if (authUser) {
         // user has logged in...
         setUser(authUser);
+        document.title = '@' + authUser.displayName + ' · Instagram';
       } else {
         // user has logged out...
         setUser(null);
+        document.title = 'Instagram';
       }
     })
 
@@ -216,7 +218,10 @@ function App() {
           >
             <div style={modalStyle} className={classes.paper}>
               {user?.displayName ? (
-                <ImageUpload username={user.displayName} onClose={() => setOpenNewStory(false)} />
+                <ImageUpload username={user.displayName} onComplete={() => {
+                  setOpenNewStory(false);
+                  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                }} />
               ) : (
                 <h3>Sorry you need to Login to upload</h3>
               )}
@@ -261,5 +266,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
