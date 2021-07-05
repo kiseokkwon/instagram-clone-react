@@ -39,6 +39,7 @@ section {
 }
 
 .post__buttonIcon {
+  font-size: 0px;
   padding: 8px;
   background: 0 0;
   border: 0;
@@ -60,8 +61,11 @@ section {
 }
 
 .post__comments {
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 10px;
+}
+.post__comments p {
+  margin: 2px 0;
 }
 
 .post__commentBox {

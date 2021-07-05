@@ -8,3 +8,9 @@
 .imageupload__progress {
     width: 100%;
 }
+
+.imageupload__path {
+    border-width: 1px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}

@@ -4,7 +4,7 @@ import firebase from "firebase"
 import { storage, db } from "./firebase"
 import './ImageUpload.css'
 
-function ImageUpload({username}) {
+function ImageUpload({username, onClose}) {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [caption, setCaption] = useState('');
@@ -16,51 +16,56 @@ function ImageUpload({username}) {
   };
 
   const handleUpload = () => {
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    if (image) {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // progress function ...
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },
-      (error) => {
-        // Error function ...
-        console.log(error);
-        alert(error.message);
-      },
-      () => {
-        // complete function ...
-        storage
-          .ref('images')
-          .child(image.name)
-          .getDownloadURL()
-          .then(url => {
-            // post image inside db
-            db.collection("posts").add({
-              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-              caption: caption,
-              imageUrl: url,
-              username: username
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // progress function ...
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          // Error function ...
+          console.log(error);
+          alert(error.message);
+          onClose();
+        },
+        () => {
+          // complete function ...
+          storage
+            .ref('images')
+            .child(image.name)
+            .getDownloadURL()
+            .then(url => {
+              // post image inside db
+              db.collection("posts").add({
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                caption: caption,
+                imageUrl: url,
+                username: username
+              });
+
+              setProgress(0);
+              setCaption('');
+              setImage(null);
+              onClose();
             });
-
-            setProgress(0);
-            setCaption('');
-            setImage(null);
-          });
-      }
-    );
+        }
+      );
+    }
   };
 
   return (
     <div className="imageupload">
+      {image && <img id="imageupload__preview" src={image ? URL.createObjectURL(image) : null} alt="preview" />}
       <progress className="imageupload__progress" value={progress} max="100" />
-      <input type="text" placeholder="Enter a caption..." onChange={event => setCaption(event.target.value)} value={caption} />
+      <input className="imageupload__path" type="text" placeholder="Enter a caption..." onChange={event => setCaption(event.target.value)} value={caption} />
       <input type="file" onChange={handleChange} />
-      <Button onClick={handleUpload}>
+      <Button type="submit" onClick={handleUpload}>
         Upload
       </Button>
     </div >
