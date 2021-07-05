@@ -8,6 +8,7 @@ function Post({ postId, user, username, caption, imageUrl }) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
   const [favorite, setFavorite] = useState(false);
+  const [faviCnt, setFaviCnt] = useState(0);
 
   useEffect(() => {
     let unsubscribe;
@@ -23,6 +24,7 @@ function Post({ postId, user, username, caption, imageUrl }) {
             comment: doc.data()
           })));
         });
+      
     }
 
     return () => {
@@ -44,6 +46,15 @@ function Post({ postId, user, username, caption, imageUrl }) {
     };
   }, [user, postId]);
 
+  useEffect(() => {
+    if (postId) {
+      var query = db.collection('posts').doc(postId).collection('favorites').where("favorite", "==", true);
+      query.onSnapshot(querySnapshot => {
+        setFaviCnt(querySnapshot.size);
+      });
+    }
+  }, [postId]);
+
   const postComment = (event) => {
     event.preventDefault();
     db.collection('posts').doc(postId).collection('comments').add({
@@ -62,7 +73,7 @@ function Post({ postId, user, username, caption, imageUrl }) {
       })
       setFavorite(!favorite);
     }
-  }
+  };
 
   return (
     <div className="post">
@@ -119,6 +130,9 @@ function Post({ postId, user, username, caption, imageUrl }) {
             </button>
           </span>
         </section>
+        
+        <h4 className="post__likeCount"><strong>좋아요 {faviCnt}개</strong></h4>
+        
         <h4 className="post__text"><strong>{username}</strong> {caption}</h4>
 
         <div className="post__comments">
