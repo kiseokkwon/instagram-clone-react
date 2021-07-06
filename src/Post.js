@@ -4,7 +4,7 @@ import { db } from './firebase';
 import Avatar from "@material-ui/core/Avatar";
 import firebase from 'firebase/app';
 
-function Post({ postId, user, username, caption, imageUrl }) {
+function Post({ postId, user, username, caption, imageUrl, contentType }) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
   const [favorite, setFavorite] = useState(false);
@@ -24,7 +24,6 @@ function Post({ postId, user, username, caption, imageUrl }) {
             comment: doc.data()
           })));
         });
-      
     }
 
     return () => {
@@ -85,8 +84,13 @@ function Post({ postId, user, username, caption, imageUrl }) {
         <h3>{username}</h3>
       </div>
 
-      <img className="post__image" src={imageUrl} alt="" />
-
+      {
+        String(contentType).includes('video')
+          ?
+          <video className="post__image" autoPlay controls loop src={imageUrl} type={String(contentType)} />
+          :
+          <img className="post__image" src={imageUrl} alt="" />
+      }
       <div className="post__body">
         <section className="ltpMr  Slqrh">
           <span className="iconlike">

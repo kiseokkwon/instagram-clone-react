@@ -39,20 +39,29 @@ function ImageUpload({username, onComplete}) {
           storage
             .ref('images')
             .child(image.name)
-            .getDownloadURL()
-            .then(url => {
-              // post image inside db
-              db.collection("posts").add({
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                caption: caption,
-                imageUrl: url,
-                username: username
-              });
+            .getMetadata()
+            .then(metadata => {
+              var type = metadata.contentType;
+              console.log(type);
+              storage
+                .ref('images')
+                .child(image.name)
+                .getDownloadURL()
+                .then(url => {
+                  // post image inside db
+                  db.collection("posts").add({
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    caption: caption,
+                    imageUrl: url,
+                    contentType: type,
+                    username: username
+                  })
 
-              setProgress(0);
-              setCaption('');
-              setImage(null);
-              onComplete();
+                  setProgress(0);
+                  setCaption('');
+                  setImage(null);
+                  onComplete();
+                });
             });
         }
       );
@@ -61,9 +70,11 @@ function ImageUpload({username, onComplete}) {
 
   return (
     <div className="imageupload">
-      {image && <img id="imageupload__preview" src={image ? URL.createObjectURL(image) : null} alt="preview" />}
-      <progress className="imageupload__progress" value={progress} max="100" />
-      <input className="imageupload__path" type="text" placeholder="Enter a caption..." onChange={event => setCaption(event.target.value)} value={caption} />
+      <div className="imageupload_previewContainer">
+        {image && <img className="imageupload__preview" src={image ? URL.createObjectURL(image) : null} alt="preview" />}
+      </div>
+      {progress > 0 && <progress className="imageupload__progress" value={progress} max="100" />}
+      <textarea className="imageupload__caption" placeholder="Enter a caption..." rows="4" onChange={event => setCaption(event.target.value)} value={caption}></textarea>
       <input type="file" onChange={handleChange} />
       <Button type="submit" onClick={handleUpload}>
         Upload

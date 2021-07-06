@@ -7,8 +7,15 @@
   padding-right: 4px;
 }
 
+.app__loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+  fill: #c7c7c7;
+}
+
 .app__login {
-  height: 100vh;
   color: gray;
 }
 
@@ -71,6 +78,11 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.app__headerContainer {
+  display: flex;
+  max-width: 600px;
 }
 
 .app__headerNewButton, .app__headerAvatar {
