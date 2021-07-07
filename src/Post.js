@@ -134,24 +134,22 @@ function Post({ postId, user, username, caption, imageUrl, contentType }) {
             </button>
           </span>
         </section>
-        
+
         <h4 className="post__likeCount"><strong>좋아요 {faviCnt}개</strong></h4>
-        
+
         <h4 className="post__text"><strong>{username}</strong> {caption}</h4>
 
         <div className="post__comments">
           {
-            comments.map(({ id, comment }) => {
-              return (<p key={id}>
-                <strong>{comment.username}</strong> {comment.text}
-              </p>)
-            })
+            comments.map(({ id, comment }) => (<p key={id}>
+              <strong>{comment.username}</strong> {comment.text}
+            </p>))
           }
         </div>
 
       </div>
-      {user && (
-        <form className="post__commentBox">
+      {
+        user && (<form className="post__commentBox">
           <input
             className="post__input"
             type="text"
@@ -168,7 +166,8 @@ function Post({ postId, user, username, caption, imageUrl, contentType }) {
             Post
           </button>
         </form>
-      )}
+        )
+      }
     </div>
   )
 }

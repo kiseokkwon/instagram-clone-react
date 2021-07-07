@@ -4,7 +4,7 @@ import firebase from "firebase"
 import { storage, db } from "./firebase"
 import './ImageUpload.css'
 
-function ImageUpload({username, onComplete}) {
+function ImageUpload({ username, onComplete }) {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [caption, setCaption] = useState('');
@@ -71,9 +71,13 @@ function ImageUpload({username, onComplete}) {
   return (
     <div className="imageupload">
       <div className="imageupload_previewContainer">
-        {image && <img className="imageupload__preview" src={image ? URL.createObjectURL(image) : null} alt="preview" />}
+        {
+          image && <img className="imageupload__preview" src={image ? URL.createObjectURL(image) : null} alt="preview" />
+        }
       </div>
-      {progress > 0 && <progress className="imageupload__progress" value={progress} max="100" />}
+      {
+        progress > 0 && <progress className="imageupload__progress" value={progress} max="100" />
+      }
       <textarea className="imageupload__caption" placeholder="Enter a caption..." rows="4" onChange={event => setCaption(event.target.value)} value={caption}></textarea>
       <input type="file" onChange={handleChange} />
       <Button type="submit" onClick={handleUpload}>
