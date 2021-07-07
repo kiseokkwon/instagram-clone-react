@@ -83,18 +83,32 @@ function App() {
   const signUp = (event) => {
     event.preventDefault();
 
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        setOpen(false);
-        return authUser.user.updateProfile({
-          displayName: username
-        }).then(() => setUser(authUser));
-      })
-      .catch((error) => {
-        alert(error.message);
-        clearAll();
-      });
+    db.collection('users').where('username', "==", username).get().then(querySnapshot => {
+      console.log("query username");
+      if (querySnapshot.size === 0) {
+        auth
+          .createUserWithEmailAndPassword(email, password)
+          .then((authUser) => {
+            setOpen(false);
+            console.log("createUser then");
+            return authUser.user.updateProfile({
+              displayName: username
+            }).then(() => {
+              setUser(authUser);
+              db.collection('users').doc(email).set({
+                username: username
+              });
+              console.log("dbset then");
+            });
+          })
+          .catch((error) => {
+            alert(error.message);
+            clearAll();
+          });
+      } else {
+        alert('The username already exists. Please use a different username');
+      }
+    });
   };
 
   const signIn = (event) => {
