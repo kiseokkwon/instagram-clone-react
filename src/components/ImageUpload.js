@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
-import { Button } from '@material-ui/core'
-import firebase from "firebase"
-import { storage, db } from "./firebase"
-import './ImageUpload.css'
+import "./ImageUpload.css";
+import React, { useState } from "react";
+import { Button } from "@material-ui/core";
+import { db, storage } from "../firebase";
 
 function ImageUpload({ username, onComplete }) {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [caption, setCaption] = useState('');
+  const [caption, setCaption] = useState("");
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -37,28 +36,28 @@ function ImageUpload({ username, onComplete }) {
         () => {
           // complete function ...
           storage
-            .ref('images')
+            .ref("images")
             .child(image.name)
             .getMetadata()
-            .then(metadata => {
+            .then((metadata) => {
               var type = metadata.contentType;
               console.log(type);
               storage
-                .ref('images')
+                .ref("images")
                 .child(image.name)
                 .getDownloadURL()
-                .then(url => {
+                .then((url) => {
                   // post image inside db
                   db.collection("posts").add({
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    timestamp: db.FieldValue.serverTimestamp(),
                     caption: caption,
                     imageUrl: url,
                     contentType: type,
-                    username: username
-                  })
+                    username: username,
+                  });
 
                   setProgress(0);
-                  setCaption('');
+                  setCaption("");
                   setImage(null);
                   onComplete();
                 });
@@ -71,20 +70,34 @@ function ImageUpload({ username, onComplete }) {
   return (
     <div className="imageupload">
       <div className="imageupload_previewContainer">
-        {
-          image && <img className="imageupload__preview" src={image ? URL.createObjectURL(image) : null} alt="preview" />
-        }
+        {image && (
+          <img
+            className="imageupload__preview"
+            src={image ? URL.createObjectURL(image) : null}
+            alt="preview"
+          />
+        )}
       </div>
-      {
-        progress > 0 && <progress className="imageupload__progress" value={progress} max="100" />
-      }
-      <textarea className="imageupload__caption" placeholder="Enter a caption..." rows="4" onChange={event => setCaption(event.target.value)} value={caption}></textarea>
+      {progress > 0 && (
+        <progress
+          className="imageupload__progress"
+          value={progress}
+          max="100"
+        />
+      )}
+      <textarea
+        className="imageupload__caption"
+        placeholder="Enter a caption..."
+        rows="4"
+        onChange={(event) => setCaption(event.target.value)}
+        value={caption}
+      ></textarea>
       <input type="file" onChange={handleChange} />
       <Button type="submit" onClick={handleUpload}>
         Upload
       </Button>
-    </div >
-  )
+    </div>
+  );
 }
 
-export default ImageUpload
+export default ImageUpload;

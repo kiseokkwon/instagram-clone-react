@@ -2,9 +2,14 @@
   margin: 0;
 }
 
-.app {
+.home {
   height: 100%;
   padding-right: 4px;
+}
+
+.home__popup {
+  display: flex;
+  flex-direction: column;
 }
 
 .app__loading {
@@ -96,9 +101,4 @@ footer {
 
 .app__headerImage {
   object-fit: contain;
-}
-
-.app__signup {
-  display: flex;
-  flex-direction: column;
 }
