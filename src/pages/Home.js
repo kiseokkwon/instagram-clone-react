@@ -36,7 +36,9 @@ function Home({ setLoading }) {
         history.push("/main");
       } else {
         document.title = "Instagram";
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
       }
     });
     return unsubscribe;
