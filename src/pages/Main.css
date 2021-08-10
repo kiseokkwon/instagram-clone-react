@@ -1,0 +1,35 @@
+.main {
+  background-color: #fafafa;
+}
+
+.header-container {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: white;
+  padding: 5px 10px;
+  border-bottom: 1px solid lightgray;
+  object-fit: contain;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main__headerNewButton,
+.main__headerAvatar {
+  font-size: 0px;
+  padding: 8px;
+  background: 0 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.main__headerImage {
+  object-fit: contain;
+}
+
+.main__posts {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
