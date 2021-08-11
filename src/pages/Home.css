@@ -44,7 +44,7 @@
 }
 
 .home__login .button {
-  margin-top: 30vh;
+  margin-top: 5vh;
 }
 
 .home__login footer {
@@ -56,4 +56,8 @@
 
 .home__login footer h3 {
   color: #555555;
+}
+
+.home .home__logo {
+  margin-top: 40px;
 }

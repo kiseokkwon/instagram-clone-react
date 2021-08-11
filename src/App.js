@@ -13,7 +13,14 @@ function App() {
   const [dynamicStyle, setDynamicStyle] = useState({});
 
   const handleAnimation = (event) => {
-    if (event.target.textContent !== "로그인") {
+    console.log(event.target.className);
+    if (
+      event.target.textContent !== "로그인" &&
+      event.target.tagName !== "path" &&
+      event.target.className.baseVal !== "MuiSvgIcon-root MuiAvatar-fallback" &&
+      event.target.className !==
+        "MuiAvatar-root MuiAvatar-circular makeStyles-small-18 MuiAvatar-colorDefault"
+    ) {
       return;
     }
     setDynamicStyle({

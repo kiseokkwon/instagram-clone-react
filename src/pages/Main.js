@@ -59,10 +59,12 @@ function Main({ setLoading }) {
   };
 
   const signOut = () => {
-    auth.signOut().then(() => {
-      alert("You have been logged out successfully");
-      history.push("/");
-    });
+    setTimeout(() => {
+      auth.signOut().then(() => {
+        //alert("You have been logged out successfully");
+        history.push("/");
+      });
+    }, 800);
   };
 
   return (
