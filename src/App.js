@@ -16,13 +16,15 @@ function App() {
       type = 2;
     } else if (
       event.target.parentElement.className === "about__headerback" ||
+      event.target.parentElement.className.baseVal ===
+        "MuiSvgIcon-root arrow_back" ||
       event.target.className.baseVal === "MuiSvgIcon-root MuiAvatar-fallback" ||
       event.target.parentElement.className.baseVal ===
         "MuiSvgIcon-root MuiAvatar-fallback" ||
       String(event.target.className).includes("MuiAvatar") ||
       String(event.target.parentElement.className).includes("MuiAvatar") ||
-      event.target.className == "main__headerAvatar" ||
-      event.target.parentElement.className == "main__headerAvatar"
+      event.target.className === "main__headerAvatar" ||
+      event.target.parentElement.className === "main__headerAvatar"
     ) {
       type = 1;
     }

@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let urls = [];
 function Main() {
   const classes = useStyles();
   const history = useHistory();
@@ -42,13 +41,10 @@ function Main() {
       .onSnapshot((snapshot) => {
         // every time a new post it added, this code fires...
         setPosts(
-          snapshot.docs.map((doc) => {
-            urls.push(doc.data().imageUrl);
-            return {
-              id: doc.id,
-              post: doc.data(),
-            };
-          })
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            post: doc.data(),
+          }))
         );
       });
     return () => {
@@ -78,7 +74,7 @@ function Main() {
         <div className="header-container">
           <button
             className="main__headerNewButton"
-            onClick={() => history.push("/about", urls)}
+            onClick={() => history.push("/about")}
           >
             <svg
               aria-label="새 스토리"

@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button, Input, Modal } from "@material-ui/core";
 import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
-import SigninButton from "../components/SigninButton";
 import LottiePlayer from "../lottie/LottiePlayer";
 import cellphone from "../lottie/cellphone.json";
 import instagram from "../lottie/instagram-icon.json";
@@ -143,9 +142,6 @@ function Home() {
           </h5>
           <div>
             <LottiePlayer animationData={cellphone} size="300px" />
-          </div>
-          <div className="button">
-            <SigninButton type="google" />
           </div>
         </main>
         <footer>

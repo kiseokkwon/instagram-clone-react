@@ -119,7 +119,7 @@ export default function CardStack() {
             className="about__headerback"
             onClick={() => setTimeout(() => history.goBack(), 700)}
           >
-            <ArrowBackIosIcon />
+            <ArrowBackIosIcon className="arrow_back" />
           </button>
           <img
             className="main__headerImage"
