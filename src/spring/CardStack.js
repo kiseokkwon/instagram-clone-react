@@ -99,8 +99,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardStack(props) {
-  console.log(props);
+export default function CardStack() {
   const classes = useStyles();
   const history = useHistory();
   const signOut = (event) => {

@@ -50,11 +50,6 @@ function Main() {
             };
           })
         );
-        console.log(urls[1]);
-        console.log(urls[2]);
-        console.log(urls[3]);
-        console.log(urls[4]);
-        console.log(urls[5]);
       });
     return () => {
       unsubscribe();
@@ -74,6 +69,7 @@ function Main() {
         history.push("/");
       });
     }, 800);
+    return true;
   };
 
   return (

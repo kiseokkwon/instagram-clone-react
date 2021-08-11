@@ -23,27 +23,41 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: transparent;
 }
 .circle {
   position: absolute;
-  background: #42b5f9;
   border-radius: 50%;
-  /* box-shadow: 7px 7px 10px 1px rgba(0,0,0,0.5); */
+  box-sizing: border-box;
 }
 .scale-anim {
-  width: 100vh;
-  height: 100vh;
-  animation: 1s ease-in alternate scale;
-  animation-iteration-count: 2;
-  animation-fill-mode: forwards;
+  width: max(100vw, 100vh);
+  height: max(100vw, 100vh);
+  animation: scale 1s ease-in forwards alternate 2;
+  z-index: 10;
+}
+.scale-hole-anim {
+  width: max(100vw, 100vh);
+  height: max(100vw, 100vh);
+  animation: scale 1.5s ease-in forwards, hole 1s ease-in 1.5s forwards;
   z-index: 10;
 }
 @keyframes scale {
   0% {
     transform: scale(0);
+    background-color: #42b5f9;
   }
   100% {
     transform: scale(2.4);
+    background-color: #42b5f9;
+  }
+}
+@keyframes hole {
+  0% {
+    border: #42b5f9 max(50vw, 50vh) solid;
+    background-color: transparent;
+  }
+  100% {
+    border: #42b5f9 0 solid;
+    background-color: transparent;
   }
 }
