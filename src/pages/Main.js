@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Main({ setLoading }) {
+let urls = [];
+function Main() {
   const classes = useStyles();
   const history = useHistory();
   const [posts, setPosts] = useState([]);
@@ -41,24 +42,32 @@ function Main({ setLoading }) {
       .onSnapshot((snapshot) => {
         // every time a new post it added, this code fires...
         setPosts(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            post: doc.data(),
-          }))
+          snapshot.docs.map((doc) => {
+            urls.push(doc.data().imageUrl);
+            return {
+              id: doc.id,
+              post: doc.data(),
+            };
+          })
         );
-        setTimeout(() => setLoading(false), 700);
+        console.log(urls[1]);
+        console.log(urls[2]);
+        console.log(urls[3]);
+        console.log(urls[4]);
+        console.log(urls[5]);
       });
     return () => {
       unsubscribe();
     };
-  }, [history, setLoading]);
+  }, [history]);
 
   const uploadComplete = () => {
     setOpenNewStory(false);
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
-  const signOut = () => {
+  const signOut = (event) => {
+    event.preventDefault();
     setTimeout(() => {
       auth.signOut().then(() => {
         //alert("You have been logged out successfully");
@@ -73,7 +82,7 @@ function Main({ setLoading }) {
         <div className="header-container">
           <button
             className="main__headerNewButton"
-            onClick={() => setOpenNewStory(true)}
+            onClick={() => history.push("/about", urls)}
           >
             <svg
               aria-label="새 스토리"

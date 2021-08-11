@@ -16,7 +16,8 @@
 }
 
 .main__headerNewButton,
-.main__headerAvatar {
+.main__headerAvatar,
+.about__headerback {
   font-size: 0px;
   padding: 8px;
   background: 0 0;

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Home({ setLoading }) {
+function Home() {
   const classes = useStyles();
   const history = useHistory();
   const [open, setOpen] = useState(false);
@@ -41,13 +41,10 @@ function Home({ setLoading }) {
         }
       } else {
         document.title = "Instagram";
-        setTimeout(() => {
-          setLoading(false);
-        }, 500);
       }
     });
     return unsubscribe;
-  }, [history, setLoading]);
+  }, [history]);
 
   const handleOpen = (e) => {
     e.preventDefault();
