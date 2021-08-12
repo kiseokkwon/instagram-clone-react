@@ -49,11 +49,13 @@
 }
 @keyframes hole {
   0% {
-    border: #42b5f9 max(50vw, 50vh) solid;
+    border: solid max(50vw, 50vh);
+    border-color: #42b5f9;
     background-color: transparent;
   }
   100% {
-    border: #42b5f9 0 solid;
+    border: solid 0;
+    border-color: #42b5f9;
     background-color: transparent;
   }
 }

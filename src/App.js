@@ -44,6 +44,7 @@ function App() {
       type === 2 ? 4000 : 2000
     );
   };
+
   return (
     <div className="animationContainer" onClick={handleAnimation}>
       <div
