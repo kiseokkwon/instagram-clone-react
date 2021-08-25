@@ -1,26 +1,22 @@
 .post {
   background-color: white;
-  max-width: 500px;
+  max-width: 31.25rem;
   border: 1px solid lightgray;
-  border-radius: 5px;
-  margin-bottom: 45px;
+  border-radius: 0.312rem;
+  margin-bottom: 2.812rem;
 }
 
 .post__header {
   display: flex;
   align-items: center;
-  padding: 20px;
-}
-
-.post__avatar {
-  margin-right: 10px;
+  padding: 1.25rem;
 }
 
 .post__image {
   width: 100%;
   object-fit: contain;
-  border-top: 1px solid lightgray;
-  border-bottom: 1px solid lightgray;
+  border-top: 0.062rem solid lightgray;
+  border-bottom: 0.062rem solid lightgray;
 }
 
 .post__text {
@@ -28,46 +24,46 @@
 }
 
 .post__body {
-  padding: 0 16px;
+  padding: 0 1rem;
 }
 
 section {
   display: flex;
   flex-shrink: 0;
   align-items: stretch;
-  margin-top: 4px;
+  margin-top: 0.25rem;
 }
 
 .post__buttonIcon {
-  font-size: 0px;
-  padding: 8px;
+  font-size: 0;
+  padding: 0.5rem;
   background: 0 0;
   border: 0;
   cursor: pointer;
 }
 
 .iconlike {
-  margin-left: -8px;
+  margin-left: -0.5rem;
 }
 
 .iconsave {
   display: inline-block;
   margin-left: auto;
-  margin-right: -10px;
+  margin-right: -0.625rem;
 }
 
 .post__likeCount {
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 }
 
 .post__comments {
-  margin-top: 30px;
-  margin-bottom: 20px;
+  margin-top: 1.875rem;
+  margin-bottom: 1.25rem;
 }
 
 .post__comments p {
-  margin-top: 5px;
-  margin-bottom: 10px;
+  margin-top: 0.312rem;
+  margin-bottom: 0.625rem;
 }
 
 .post__commentBox {
@@ -77,8 +73,8 @@ section {
 .post__input {
   flex: 1;
   border: none;
-  padding: 10px;
-  border-top: 1px solid lightgray;
+  padding: 0.625rem;
+  border-top: 0.062rem solid lightgray;
 }
 
 .post__button {
@@ -86,5 +82,6 @@ section {
   border: none;
   color: #6082a3;
   background-color: transparent;
-  border-top: 1px solid lightgray;
+  border-top: 0.062rem solid lightgray;
+  margin-right: 0.2rem;
 }

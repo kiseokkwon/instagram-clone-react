@@ -126,7 +126,7 @@ function Home() {
     <div className="home">
       <div className="home__login">
         <div className="home__logo">
-          <LottiePlayer animationData={instagram} size="100px" />
+          <LottiePlayer animationData={instagram} size="6rem" />
         </div>
         <main>
           <img
@@ -141,7 +141,7 @@ function Home() {
             <span onClick={handleOpen}>가입하기</span>
           </h5>
           <div>
-            <LottiePlayer animationData={cellphone} size="300px" />
+            <LottiePlayer animationData={cellphone} size="18rem" />
           </div>
         </main>
         <footer>
