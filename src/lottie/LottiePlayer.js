@@ -11,14 +11,14 @@ const lottieOptions = {
   },
 };
 
-function LottiePlayer({ animationData, size }) {
+function LottiePlayer({ animationData, size, options, style }) {
   return (
-    <div className="lottieContainer">
+    <div className="lottieContainer" style={style}>
       <Lottie
-        options={{ ...lottieOptions, animationData }}
+        options={{ ...lottieOptions, animationData, ...options }}
         isStopped={false}
         isPaused={false}
-        isClickToPauseDisabled={false}
+        isClickToPauseDisabled={true}
         style={{ width: size, height: size }} // svg의 부모 div에 적용
         eventListeners={[
           {

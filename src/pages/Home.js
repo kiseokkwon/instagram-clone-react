@@ -1,12 +1,13 @@
 import "./Home.css";
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Input, Modal } from "@material-ui/core";
+import { Button, Input, Modal, OutlinedInput } from "@material-ui/core";
 import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
 import LottiePlayer from "../lottie/LottiePlayer";
 import cellphone from "../lottie/cellphone.json";
 import instagram from "../lottie/instagram-icon.json";
+import socialmedia from "../lottie/socialmedia.json";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -130,7 +131,11 @@ function Home() {
     <div className="home">
       <div className="home__login">
         <div className="home__logo">
-          <LottiePlayer animationData={instagram} size="6rem" />
+          <LottiePlayer
+            animationData={instagram}
+            size="6rem"
+            options={{ loop: false }}
+          />
         </div>
         <main>
           <img
@@ -145,7 +150,11 @@ function Home() {
             <span onClick={handleOpen}>가입하기</span>
           </h5>
           <div>
-            <LottiePlayer animationData={cellphone} size="18rem" />
+            <LottiePlayer
+              animationData={socialmedia}
+              size="18rem"
+              style={{ marginTop: "3.5rem" }}
+            />
           </div>
         </main>
         <footer>
@@ -165,7 +174,7 @@ function Home() {
               />
             </center>
             {modaltype === 2 && (
-              <Input
+              <OutlinedInput
                 type="text"
                 placeholder="username"
                 value={username}
