@@ -1,30 +1,37 @@
 .imageupload {
-    display: flex;
-    flex-direction: column;
-    margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0.625rem auto;
 }
 
 .imageupload__progress {
-    width: 100%;
+  width: 100%;
 }
 
 .imageupload__caption {
-    border-width: 1px;
-    margin-top: 4px;
-    margin-bottom: 4px;
-    font: 400 13.3333px Arial;
+  border-width: 0.062rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  font: 400 0.833rem Arial;
 }
 
 .imageupload_previewContainer {
-    min-height: 100px;
-    border: 1px solid lightgray;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  min-height: 6.25rem;
+  max-height: 20rem;
+  overflow: hidden;
+  border: 0.062rem solid lightgray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .imageupload__preview {
-    max-width: 300px;
-    width: 100%;
-    height: auto;
+  max-width: 18.75rem;
+  width: 100%;
+  height: auto;
+}
+
+.imageupload__loader {
+  font-size: 0.833rem;
+  margin-top: 0.625rem;
 }

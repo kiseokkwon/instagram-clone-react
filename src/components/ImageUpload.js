@@ -1,9 +1,16 @@
 import "./ImageUpload.css";
 import React, { useState } from "react";
-import { Button } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import { db, storage } from "../firebase";
 
+const useStyles = makeStyles((theme) => ({
+  button: {
+    marginTop: "0.5rem",
+  },
+}));
+
 function ImageUpload({ username, onComplete }) {
+  const classes = useStyles();
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [caption, setCaption] = useState("");
@@ -22,6 +29,7 @@ function ImageUpload({ username, onComplete }) {
         "state_changed",
         (snapshot) => {
           // progress function ...
+          console.log(snapshot);
           const progress = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
@@ -92,9 +100,13 @@ function ImageUpload({ username, onComplete }) {
         onChange={(event) => setCaption(event.target.value)}
         value={caption}
       ></textarea>
-      <input type="file" onChange={handleChange} />
-      <Button type="submit" onClick={handleUpload}>
-        Upload
+      <input
+        className="imageupload__loader"
+        type="file"
+        onChange={handleChange}
+      />
+      <Button className={classes.button} type="submit" onClick={handleUpload}>
+        <strong>Upload</strong>
       </Button>
     </div>
   );

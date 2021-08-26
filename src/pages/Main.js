@@ -9,14 +9,15 @@ import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   newpaper: {
     position: "absolute",
-    width: 300,
+    width: "18.75rem",
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(2, 2, 1),
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
+    boxSizing: "border-box",
   },
   small: {
     width: "1.5rem",
@@ -32,9 +33,14 @@ function Main() {
 
   useEffect(() => {
     if (!auth.currentUser) {
-      history.push("/");
+      history.push({
+        pathname: "/",
+        state: { from: history.location.pathname },
+      });
       return;
     }
+    document.title = "@" + auth.currentUser.displayName + " · Instagram";
+
     const unsubscribe = db
       .collection("posts")
       .orderBy("timestamp", "desc")
@@ -62,7 +68,10 @@ function Main() {
     setTimeout(() => {
       auth.signOut().then(() => {
         //alert("You have been logged out successfully");
-        history.push("/");
+        history.push({
+          pathname: "/",
+          state: { from: history.location.pathname },
+        });
       });
     }, 800);
     return true;
@@ -74,7 +83,10 @@ function Main() {
         <div className="header-container">
           <button
             className="main__headerNewButton"
-            onClick={() => history.push("/about")}
+            onClick={
+              () => setOpenNewStory(true)
+              //history.push("/about")
+            }
           >
             <svg
               aria-label="새 스토리"
@@ -115,6 +127,7 @@ function Main() {
           </div>
         </div>
       </article>
+
       <Modal open={openNewStory} onClose={() => setOpenNewStory(false)}>
         <div className={classes.newpaper}>
           {auth.currentUser ? (

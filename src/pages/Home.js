@@ -11,7 +11,7 @@ import instagram from "../lottie/instagram-icon.json";
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    width: 300,
+    width: "21.25rem",
     backgroundColor: theme.palette.background.paper,
     // border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
+    boxSizing: "border-box",
+  },
+  button: {
+    marginTop: "0.75rem",
   },
 }));
 
@@ -34,9 +38,11 @@ function Home() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        document.title = "@" + authUser.displayName + " · Instagram";
         if (history.location.pathname !== "/main") {
-          history.push("/main");
+          history.push({
+            pathname: "/main",
+            state: { from: history.location.pathname },
+          });
         }
       } else {
         document.title = "Instagram";
@@ -79,7 +85,6 @@ function Home() {
           auth
             .createUserWithEmailAndPassword(email, password)
             .then((authUser) => {
-              history.push("/main");
               setOpen(false);
               return authUser.user
                 .updateProfile({
@@ -106,7 +111,6 @@ function Home() {
     auth
       .signInWithEmailAndPassword("test@lge.com", "123qwe")
       .then(() => {
-        history.push("/main");
         setOpen(false);
         clearAll();
       })
@@ -181,12 +185,12 @@ function Home() {
               onChange={(e) => setPassword(e.target.value)}
             />
             {modaltype === 1 ? (
-              <Button type="submit" onClick={signIn}>
-                Sign In
+              <Button className={classes.button} type="submit" onClick={signIn}>
+                <strong>Sign In</strong>
               </Button>
             ) : (
-              <Button type="submit" onClick={signUp}>
-                Sign Up
+              <Button className={classes.button} type="submit" onClick={signUp}>
+                <strong>Sign Up</strong>
               </Button>
             )}
           </form>

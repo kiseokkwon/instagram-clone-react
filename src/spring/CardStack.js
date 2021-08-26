@@ -92,7 +92,7 @@ function Deck() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   small: {
     width: "1.5rem",
     height: "1.5rem",
@@ -107,7 +107,10 @@ export default function CardStack() {
     setTimeout(() => {
       auth.signOut().then(() => {
         //alert("You have been logged out successfully");
-        history.push("/");
+        history.push({
+          pathname: "/",
+          state: { from: history.location.pathname },
+        });
       });
     }, 800);
   };
