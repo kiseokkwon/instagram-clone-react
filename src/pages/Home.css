@@ -1,8 +1,8 @@
 .home {
   height: 100%;
   padding-right: 0.25rem;
+  color: gray;
 }
-
 .home__loading {
   position: absolute;
   top: 50%;
@@ -11,57 +11,57 @@
   fill: #c7c7c7;
 }
 
-.home__login {
-  color: gray;
+.home header {
+  margin-top: 5vh;
 }
 
-.home__login main {
+.home main {
   width: 100vw;
   position: absolute;
-  top: 20%;
+  top: 18vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.home__loginImage {
+.home main .logo {
   width: 15.625rem;
 }
 
-.home__login h5 {
+.home main h5 {
   text-align: center;
   margin: 0.312rem 0;
 }
 
-.home__login span {
+.home main span {
   color: #0095f6;
   cursor: pointer;
 }
 
-.home__popup {
-  display: flex;
-  flex-direction: column;
+.home .loginguest {
+  color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
-.app__headerImage {
-  width: 5rem;
-}
-
-.home__login .button {
-  margin-top: 5vh;
-}
-
-.home__login footer {
+.home footer {
   width: 100vw;
   text-align: center;
   position: absolute;
   bottom: 1.875rem;
 }
 
-.home__login footer h3 {
+.home footer h3 {
   color: #555555;
 }
 
-.home .home__logo {
-  margin-top: 2.5rem;
+@media screen and (max-height: 450px) {
+  .home .lottie_player {
+    display: none;
+  }
+}
+
+@media screen and (max-height: 300px) {
+  .home footer {
+    display: none;
+  }
 }

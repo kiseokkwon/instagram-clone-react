@@ -1,15 +1,16 @@
-import "./ImageUpload.css";
+import "./ImageUploader.css";
 import React, { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
+import firebase from "firebase/app";
 import { db, storage } from "../firebase";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   button: {
-    marginTop: "0.5rem",
+    marginTop: "1.5rem",
   },
 }));
 
-function ImageUpload({ username, onComplete }) {
+function ImageUploader({ username, onComplete }) {
   const classes = useStyles();
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
@@ -18,14 +19,20 @@ function ImageUpload({ username, onComplete }) {
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
+    } else {
+      setImage(null);
     }
   };
 
   const handleUpload = () => {
-    if (image) {
-      const uploadTask = storage.ref(`images/${image.name}`).put(image);
-
-      uploadTask.on(
+    if (!image) {
+      alert("이미지를 선택해 주세요.");
+      return;
+    }
+    storage
+      .ref(`images/${image.name}`)
+      .put(image)
+      .on(
         "state_changed",
         (snapshot) => {
           // progress function ...
@@ -57,7 +64,7 @@ function ImageUpload({ username, onComplete }) {
                 .then((url) => {
                   // post image inside db
                   db.collection("posts").add({
-                    timestamp: db.FieldValue.serverTimestamp(),
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     caption: caption,
                     imageUrl: url,
                     contentType: type,
@@ -72,15 +79,20 @@ function ImageUpload({ username, onComplete }) {
             });
         }
       );
-    }
   };
 
   return (
-    <div className="imageupload">
-      <div className="imageupload_previewContainer">
+    <div className="imageuploader">
+      <div className="imageuploader__title">
+        <strong>새 게시물</strong>
+      </div>
+      <div className="imageuploader__previewContainer">
+        {!image && (
+          <span className="imageuploader__placeholder">이미지 없음</span>
+        )}
         {image && (
           <img
-            className="imageupload__preview"
+            className="imageuploader__preview"
             src={image ? URL.createObjectURL(image) : null}
             alt="preview"
           />
@@ -88,20 +100,20 @@ function ImageUpload({ username, onComplete }) {
       </div>
       {progress > 0 && (
         <progress
-          className="imageupload__progress"
+          className="imageuploader__progress"
           value={progress}
           max="100"
         />
       )}
       <textarea
-        className="imageupload__caption"
+        className="imageuploader__caption"
         placeholder="Enter a caption..."
         rows="4"
         onChange={(event) => setCaption(event.target.value)}
         value={caption}
       ></textarea>
       <input
-        className="imageupload__loader"
+        className="imageuploader__loader"
         type="file"
         onChange={handleChange}
       />
@@ -112,4 +124,4 @@ function ImageUpload({ username, onComplete }) {
   );
 }
 
-export default ImageUpload;
+export default ImageUploader;

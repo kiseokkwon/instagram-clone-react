@@ -1,12 +1,10 @@
 .main {
   background-color: #fafafa;
 }
-header {
+.main header {
   position: sticky;
   top: 0;
   z-index: 1;
-}
-.header-container {
   background-color: white;
   padding: 0.312rem 0.625rem;
   border-bottom: 0.062rem solid lightgray;
@@ -16,8 +14,8 @@ header {
   align-items: center;
 }
 
-.main__headerNewButton,
-.main__headerAvatar,
+.main header .new_story,
+.main header .avatar,
 .about__headerback {
   font-size: 0;
   padding: 0.5rem;
@@ -26,12 +24,12 @@ header {
   cursor: pointer;
 }
 
-.main__headerImage {
+.main header .logo {
   object-fit: contain;
   width: 5rem;
 }
 
-.main__posts {
+.main article {
   padding: 1.25rem;
   display: flex;
   justify-content: center;

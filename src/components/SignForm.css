@@ -1,0 +1,9 @@
+.signform {
+  display: flex;
+  flex-direction: column;
+}
+
+.signform__header_img {
+  width: 8rem;
+  margin: 1rem 0 2rem;
+}

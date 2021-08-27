@@ -12,7 +12,7 @@ function App() {
 
   const handleAnimation = (event) => {
     let type = 0;
-    if (event.target.textContent === "로그인") {
+    if (event.target.textContent === "게스트 로그인") {
       type = 2;
     } else if (
       event.target.parentElement.className === "about__headerback" ||

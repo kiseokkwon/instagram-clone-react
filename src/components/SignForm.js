@@ -1,0 +1,142 @@
+import React, { useState } from "react";
+import "./SignForm.css";
+import { makeStyles } from "@material-ui/core";
+import {
+  Button,
+  createTheme,
+  TextField,
+  ThemeProvider,
+} from "@material-ui/core";
+import { auth, db } from "../firebase";
+
+const theme = createTheme({
+  overrides: {
+    MuiInputLabel: {
+      root: {
+        color: "rgba(0, 0, 0, 0.4)",
+      },
+    },
+  },
+});
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: "absolute",
+    width: "21.25rem",
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(3, 4, 2),
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    boxSizing: "border-box",
+  },
+  button: {
+    margin: "1.5rem 0 1rem",
+  },
+}));
+
+function SignForm({ type, setOpen }) {
+  const classes = useStyles();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const signUp = (event) => {
+    event.preventDefault();
+
+    db.collection("users")
+      .where("username", "==", username)
+      .get()
+      .then((querySnapshot) => {
+        console.log("query username");
+        if (querySnapshot.size === 0) {
+          auth
+            .createUserWithEmailAndPassword(email, password)
+            .then((authUser) => {
+              setOpen(false);
+              return authUser.user
+                .updateProfile({
+                  displayName: username,
+                })
+                .then(() => {
+                  db.collection("users").doc(email).set({
+                    username: username,
+                  });
+                });
+            })
+            .catch((error) => {
+              alert(error.message);
+            });
+        } else {
+          alert("The username already exists. Please use a different username");
+        }
+      });
+  };
+
+  const signIn = (event) => {
+    event.preventDefault();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        setOpen(false);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <div className={classes.paper}>
+        <form className="signform">
+          <center>
+            <img
+              className="signform__header_img"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/320px-Instagram_logo.svg.png"
+              alt=""
+            />
+          </center>
+          {type === 2 && (
+            <TextField
+              label="username"
+              type="search"
+              variant="outlined"
+              margin="dense"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          )}
+          <TextField
+            label="email"
+            type="email"
+            variant="outlined"
+            margin="dense"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            label="password"
+            type="password"
+            variant="outlined"
+            margin="dense"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {type === 1 ? (
+            <Button className={classes.button} type="submit" onClick={signIn}>
+              <strong>Sign In</strong>
+            </Button>
+          ) : (
+            <Button className={classes.button} type="submit" onClick={signUp}>
+              <strong>Sign Up</strong>
+            </Button>
+          )}
+        </form>
+      </div>
+    </ThemeProvider>
+  );
+}
+
+export default SignForm;
