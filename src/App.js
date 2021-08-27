@@ -14,7 +14,6 @@ function App() {
   const [user, setUser] = useState(undefined);
 
   const handleAnimation = (event) => {
-    console.log(event);
     let type = 0;
     if (event.target.textContent === "게스트 로그인") {
       type = 2;

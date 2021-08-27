@@ -2,7 +2,13 @@ html {
   font-size: 16px;
 }
 
-@media only screen and (min-width: 1080px) and (min-height: 1080px) {
+@media only screen and (min-width: 730px) and (min-height: 1000px) {
+  html {
+    font-size: 28px;
+  }
+}
+
+@media only screen and (min-width: 1080px) and (min-height: 1920px) {
   html {
     font-size: 40px;
   }
