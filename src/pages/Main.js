@@ -2,22 +2,25 @@ import React, { useEffect, useState } from "react";
 import "./Main.css";
 import { useHistory } from "react-router-dom";
 import { auth, db } from "../firebase";
-import { Avatar, makeStyles, Modal } from "@material-ui/core";
+import { Avatar, Backdrop, Fade, makeStyles, Modal } from "@material-ui/core";
 import ImageUploader from "../components/ImageUploader";
 import Post from "../components/Post";
 import { ReactComponent as NewStoryIcon } from "../assets/img/newstory.svg";
+import LoadingTool from "./LoadingTool";
 
 const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   paper: {
-    position: "absolute",
     width: "18.75rem",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 2),
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
     boxSizing: "border-box",
+    borderRadius: "0.312rem",
   },
   small: {
     width: "1.5rem",
@@ -30,13 +33,12 @@ function Main() {
   const history = useHistory();
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [logout, setLogout] = useState(false);
 
   useEffect(() => {
     if (!auth.currentUser) {
-      history.push({
-        pathname: "/",
-        state: { from: history.location.pathname },
-      });
+      history.push("/");
       return;
     }
     document.title = "@" + auth.currentUser.displayName + " · Instagram";
@@ -52,10 +54,11 @@ function Main() {
             post: doc.data(),
           }))
         );
+        setTimeout(() => {
+          setLoading(false);
+        }, 1500);
       });
-    return () => {
-      unsubscribe();
-    };
+    return unsubscribe;
   }, [history]);
 
   const uploadComplete = () => {
@@ -65,19 +68,18 @@ function Main() {
 
   const signOut = (event) => {
     event.preventDefault();
+    setLogout(true);
     setTimeout(() => {
       auth.signOut().then(() => {
-        history.push({
-          pathname: "/",
-          state: { from: history.location.pathname },
-        });
+        history.push("/");
       });
-    }, 800);
+    }, 1000);
     return true;
   };
 
   return (
     <div className="main">
+      {loading && <LoadingTool type="jumper" />}
       <header>
         <button
           className="new_story"
@@ -98,7 +100,7 @@ function Main() {
         </button>
       </header>
 
-      <article>
+      <article className={loading || logout ? "hidden" : ""}>
         <div>
           {posts.map(({ id, post }) => (
             <Post
@@ -114,17 +116,28 @@ function Main() {
         </div>
       </article>
 
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <div className={classes.paper}>
-          {auth.currentUser ? (
-            <ImageUploader
-              username={auth.currentUser.displayName}
-              onComplete={uploadComplete}
-            />
-          ) : (
-            <h3>Sorry you need to Login to upload</h3>
-          )}
-        </div>
+      <Modal
+        className={classes.modal}
+        open={open}
+        onClose={() => setOpen(false)}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 800,
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper}>
+            {auth.currentUser ? (
+              <ImageUploader
+                username={auth.currentUser.displayName}
+                onComplete={uploadComplete}
+              />
+            ) : (
+              <h3>Sorry you need to Login to upload</h3>
+            )}
+          </div>
+        </Fade>
       </Modal>
     </div>
   );

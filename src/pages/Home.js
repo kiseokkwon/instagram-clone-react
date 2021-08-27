@@ -1,34 +1,33 @@
 import "./Home.css";
-import React, { useEffect, useState } from "react";
-import { Modal } from "@material-ui/core";
+import React, { useState } from "react";
+import { Backdrop, Fade, makeStyles, Modal } from "@material-ui/core";
 import { auth } from "../firebase";
-import { useHistory } from "react-router-dom";
-import LottiePlayer from "../lottie/LottiePlayer";
 // import cellphone from "../lottie/cellphone.json";
-import instagram from "../lottie/instagram-icon.json";
-import socialmedia from "../lottie/socialmedia.json";
+import instagram from "../assets/lottie/instagram-icon.json";
+import socialmedia from "../assets/lottie/socialmedia.json";
+import LottiePlayer from "../components/LottiePlayer";
 import SignForm from "../components/SignForm";
 
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    width: "21.25rem",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(3, 4, 2),
+    boxSizing: "border-box",
+    borderRadius: "0.312rem",
+  },
+}));
+
 function Home() {
-  const history = useHistory();
+  const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [modaltype, setModaltype] = useState(0);
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        if (history.location.pathname !== "/main") {
-          history.push({
-            pathname: "/main",
-            state: { from: history.location.pathname },
-          });
-        }
-      } else {
-        document.title = "Instagram";
-      }
-    });
-    return unsubscribe;
-  }, [history]);
 
   const handleOpen = (e) => {
     e.preventDefault();
@@ -48,7 +47,6 @@ function Home() {
 
   const handleClose = () => {
     setOpen(false);
-    setModaltype(0);
   };
 
   const signInGuest = (event) => {
@@ -104,10 +102,21 @@ function Home() {
         </footer>
       </div>
 
-      <Modal open={open} onClose={handleClose}>
-        <div>
-          <SignForm type={modaltype} setOpen={setOpen} />
-        </div>
+      <Modal
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 800,
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper}>
+            <SignForm type={modaltype} setOpen={setOpen} />
+          </div>
+        </Fade>
       </Modal>
     </>
   );

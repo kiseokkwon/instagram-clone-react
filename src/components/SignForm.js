@@ -8,6 +8,7 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 import { auth, db } from "../firebase";
+import instagramlogo from "../assets/img/instagramlogo.png";
 
 const theme = createTheme({
   overrides: {
@@ -19,18 +20,7 @@ const theme = createTheme({
   },
 });
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: "absolute",
-    width: "21.25rem",
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(3, 4, 2),
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    boxSizing: "border-box",
-  },
+const useStyles = makeStyles(() => ({
   button: {
     margin: "1.5rem 0 1rem",
   },
@@ -38,14 +28,12 @@ const useStyles = makeStyles((theme) => ({
 
 function SignForm({ type, setOpen }) {
   const classes = useStyles();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
   const signUp = (event) => {
     event.preventDefault();
-
     db.collection("users")
       .where("username", "==", username)
       .get()
@@ -89,52 +77,46 @@ function SignForm({ type, setOpen }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.paper}>
-        <form className="signform">
-          <center>
-            <img
-              className="signform__header_img"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/320px-Instagram_logo.svg.png"
-              alt=""
-            />
-          </center>
-          {type === 2 && (
-            <TextField
-              label="username"
-              type="search"
-              variant="outlined"
-              margin="dense"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          )}
+      <form className="signform">
+        <center>
+          <img className="signform__header_img" src={instagramlogo} alt="" />
+        </center>
+        {type === 2 && (
           <TextField
-            label="email"
-            type="email"
+            label="username"
+            type="search"
             variant="outlined"
-            margin="dense"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            size="small"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
-          <TextField
-            label="password"
-            type="password"
-            variant="outlined"
-            margin="dense"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {type === 1 ? (
-            <Button className={classes.button} type="submit" onClick={signIn}>
-              <strong>Sign In</strong>
-            </Button>
-          ) : (
-            <Button className={classes.button} type="submit" onClick={signUp}>
-              <strong>Sign Up</strong>
-            </Button>
-          )}
-        </form>
-      </div>
+        )}
+        <TextField
+          label="email"
+          type="email"
+          variant="outlined"
+          margin="dense"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <TextField
+          label="password"
+          type="password"
+          variant="outlined"
+          margin="dense"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {type === 1 ? (
+          <Button className={classes.button} type="submit" onClick={signIn}>
+            <strong>Sign In</strong>
+          </Button>
+        ) : (
+          <Button className={classes.button} type="submit" onClick={signUp}>
+            <strong>Sign Up</strong>
+          </Button>
+        )}
+      </form>
     </ThemeProvider>
   );
 }

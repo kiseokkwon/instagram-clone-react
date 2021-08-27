@@ -74,6 +74,7 @@ function Post({ postId, user, username, caption, imageUrl, contentType }) {
   };
 
   const toggleFavorite = (event) => {
+    console.log("toggleFavorite", favorite);
     event.preventDefault();
     const favoriteUserRef = db
       .collection("posts")

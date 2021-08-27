@@ -1,16 +1,20 @@
 import "./App.css";
-import React, { useState } from "react";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { HashRouter, Redirect, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import Main from "./pages/Main";
+import LoadingTool from "./pages/LoadingTool";
 import CardStack from "./spring/CardStack";
+import { auth } from "./firebase";
 
 function App() {
   const [animated, setAnimated] = useState(false);
   const [animatedType, setAnimatedType] = useState(0); // 1:scale, 2:scale-hole
   const [dynamicStyle, setDynamicStyle] = useState({});
+  const [user, setUser] = useState(undefined);
 
   const handleAnimation = (event) => {
+    console.log(event);
     let type = 0;
     if (event.target.textContent === "게스트 로그인") {
       type = 2;
@@ -23,13 +27,13 @@ function App() {
         "MuiSvgIcon-root MuiAvatar-fallback" ||
       String(event.target.className).includes("MuiAvatar") ||
       String(event.target.parentElement.className).includes("MuiAvatar") ||
-      event.target.className === "main__headerAvatar" ||
-      event.target.parentElement.className === "main__headerAvatar"
+      event.target.className === "avatar" ||
+      event.target.parentElement.className === "avatar"
     ) {
       type = 1;
     }
     if (type === 0) {
-      return;
+      return false;
     }
     setAnimatedType(type);
     setDynamicStyle({
@@ -41,25 +45,46 @@ function App() {
       () => {
         setAnimated(false);
       },
-      type === 2 ? 4000 : 2000
+      type === 2 ? 4000 : 2500
     );
   };
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (!authUser) {
+        document.title = "Instagram";
+      }
+      setUser(authUser);
+    });
+    return unsubscribe;
+  }, []);
+
   return (
-    <div className="animationContainer" onClick={handleAnimation}>
+    <div className="eventContainer" onClick={handleAnimation}>
       <div
         className={
-          animated
-            ? animatedType === 1
-              ? "circle scale-anim"
-              : "circle scale-hole-anim"
-            : "circle"
+          animated ? "animationContainer animated" : "animationContainer"
         }
-        style={dynamicStyle}
-      />
+      >
+        <div
+          className={
+            animated
+              ? animatedType === 1
+                ? "circle scale-anim"
+                : "circle scale-hole-anim"
+              : "circle"
+          }
+          style={dynamicStyle}
+        />
+      </div>
+      {user === undefined && <LoadingTool type="loading" />}
       <HashRouter>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route
+            exact
+            path="/"
+            render={() => (user ? <Redirect to="/main" /> : <Home />)}
+          />
           <Route exact path="/main" component={Main} />
           <Route exact path="/about" component={CardStack} />
         </Switch>

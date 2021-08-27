@@ -1,10 +1,11 @@
 .main {
   background-color: #fafafa;
 }
+
 .main header {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   background-color: white;
   padding: 0.312rem 0.625rem;
   border-bottom: 0.062rem solid lightgray;
@@ -29,8 +30,15 @@
   width: 5rem;
 }
 
+.main article.hidden {
+  opacity: 0;
+  height: 80vh;
+  overflow: hidden;
+}
+
 .main article {
   padding: 1.25rem;
   display: flex;
   justify-content: center;
+  transition: opacity 1s;
 }

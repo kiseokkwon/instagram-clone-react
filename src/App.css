@@ -2,23 +2,20 @@
   margin: 0;
 }
 
-.app__loading {
-  background-color: white;
-  height: 100vh;
-  position: relative;
-  z-index: 1;
-}
-
-.loading-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  fill: #c7c7c7;
-}
-
-.animationContainer {
+.eventContainer {
   height: 100%;
+}
+.animationContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+.animationContainer.animated {
+  width: 100vw;
+  height: 100vh;
 }
 .circle {
   position: absolute;

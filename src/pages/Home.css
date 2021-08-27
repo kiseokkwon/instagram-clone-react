@@ -36,6 +36,7 @@
 .home main span {
   color: #0095f6;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .home .loginguest {
