@@ -1,11 +1,12 @@
-import "./App.css";
-import React, { useEffect, useState } from "react";
-import { HashRouter, Redirect, Route, Switch } from "react-router-dom";
-import Home from "./pages/Home";
-import Main from "./pages/Main";
-import LoadingTool from "./pages/LoadingTool";
-import CardStack from "./spring/CardStack";
-import { auth } from "./firebase";
+import './App.css';
+import React, { useEffect, useState } from 'react';
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
+import Home from './pages/Home';
+import Main from './pages/Main';
+import LoadingTool from './pages/LoadingTool';
+import CardStack from './spring/CardStack';
+import { auth } from './firebase';
+import NavBar from './components/NavBar';
 
 function App() {
   const [animated, setAnimated] = useState(false);
@@ -15,19 +16,19 @@ function App() {
 
   const handleAnimation = (event) => {
     let type = 0;
-    if (event.target.textContent === "게스트 로그인") {
+    if (event.target.textContent === '게스트 로그인') {
       type = 2;
     } else if (
-      event.target.parentElement.className === "about__headerback" ||
+      event.target.parentElement.className === 'about__headerback' ||
       event.target.parentElement.className.baseVal ===
-        "MuiSvgIcon-root arrow_back" ||
-      event.target.className.baseVal === "MuiSvgIcon-root MuiAvatar-fallback" ||
+        'MuiSvgIcon-root arrow_back' ||
+      event.target.className.baseVal === 'MuiSvgIcon-root MuiAvatar-fallback' ||
       event.target.parentElement.className.baseVal ===
-        "MuiSvgIcon-root MuiAvatar-fallback" ||
-      String(event.target.className).includes("MuiAvatar") ||
-      String(event.target.parentElement.className).includes("MuiAvatar") ||
-      event.target.className === "avatar" ||
-      event.target.parentElement.className === "avatar"
+        'MuiSvgIcon-root MuiAvatar-fallback' ||
+      String(event.target.className).includes('MuiAvatar') ||
+      String(event.target.parentElement.className).includes('MuiAvatar') ||
+      event.target.className === 'avatar' ||
+      event.target.parentElement.className === 'avatar'
     ) {
       type = 1;
     }
@@ -51,7 +52,7 @@ function App() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (!authUser) {
-        document.title = "Instagram";
+        document.title = 'Instagram';
       }
       setUser(authUser);
     });
@@ -59,34 +60,35 @@ function App() {
   }, []);
 
   return (
-    <div className="eventContainer" onClick={handleAnimation}>
+    <div className='eventContainer' onClick={handleAnimation}>
       <div
         className={
-          animated ? "animationContainer animated" : "animationContainer"
+          animated ? 'animationContainer animated' : 'animationContainer'
         }
       >
         <div
           className={
             animated
               ? animatedType === 1
-                ? "circle scale-anim"
-                : "circle scale-hole-anim"
-              : "circle"
+                ? 'circle scale-anim'
+                : 'circle scale-hole-anim'
+              : 'circle'
           }
           style={dynamicStyle}
         />
       </div>
-      {user === undefined && <LoadingTool type="loading" />}
+      {user === undefined && <LoadingTool type='loading' />}
       <HashRouter>
         <Switch>
           <Route
             exact
-            path="/"
-            render={() => (user ? <Redirect to="/main" /> : <Home />)}
+            path='/'
+            render={() => (user ? <Redirect to='/main' /> : <Home />)}
           />
-          <Route exact path="/main" component={Main} />
-          <Route exact path="/about" component={CardStack} />
+          <Route exact path='/main' component={Main} />
+          <Route exact path='/about' component={CardStack} />
         </Switch>
+        <NavBar />
       </HashRouter>
     </div>
   );
