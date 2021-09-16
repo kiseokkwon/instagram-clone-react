@@ -1,0 +1,36 @@
+.bg__home.christmas_video {
+  background: none;
+}
+
+.bg__video {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+.bg__filter.christmas_video {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.3;
+  transition: opacity 0.5s linear;
+}
+.button__setting.christmas_video {
+  background-image: url(http://localhost:9100/res/images/icon_sett.png) 50% 50% / 41px
+    41px no-repeat;
+    fill: firebrick;
+}
+
+.info__box--location.christmas_video {
+  border-color: white;
+}
+
+.info__box.christmas_video {
+  color: white;
+}
+
+.control__box.christmas_video {
+  background: rgba(0,0,0,0.5);
+  border-radius: 10%;
+}

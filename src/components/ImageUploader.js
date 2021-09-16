@@ -109,7 +109,12 @@ function ImageUploader({ username, onComplete }) {
         className="imageuploader__caption"
         placeholder="Enter a caption..."
         rows="4"
-        onChange={(event) => setCaption(event.target.value)}
+        onChange={(event) => {
+          console.log("original", caption);
+          var txt = event.target.value
+          console.log("change", txt.replace(/\r\n?|\n/g, '<br />'));
+          setCaption(txt);
+        }}
         value={caption}
       ></textarea>
       <input
