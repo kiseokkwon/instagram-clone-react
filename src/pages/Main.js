@@ -77,6 +77,10 @@ function Main() {
     return true;
   };
 
+  const isGuest = () => {
+    return auth.currentUser.email === "test@lge.com";
+  }
+
   return (
     <div className="main">
       {loading && <LoadingTool type="jumper" />}
@@ -102,8 +106,9 @@ function Main() {
 
       <article className={loading || logout ? "hidden" : ""}>
         <div>
-          {posts.map(({ id, post }) => (
-            <Post
+          {posts.map(({ id, post }) => {
+            if (isGuest() && post.username !== "instamaster") return false;
+            return <Post
               key={id}
               postId={id}
               user={auth.currentUser}
@@ -112,7 +117,7 @@ function Main() {
               imageUrl={post.imageUrl}
               contentType={post.contentType}
             />
-          ))}
+          })}
         </div>
       </article>
 

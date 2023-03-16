@@ -88,7 +88,7 @@ function App() {
           <Route exact path='/main' component={Main} />
           <Route exact path='/about' component={CardStack} />
         </Switch>
-        <NavBar />
+        {/* <NavBar /> */}
       </HashRouter>
     </div>
   );

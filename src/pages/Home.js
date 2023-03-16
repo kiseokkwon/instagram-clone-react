@@ -1,5 +1,5 @@
 import "./Home.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Backdrop, Fade, makeStyles, Modal } from "@material-ui/core";
 import { auth } from "../firebase";
 // import cellphone from "../lottie/cellphone.json";
@@ -50,7 +50,7 @@ function Home() {
   };
 
   const signInGuest = (event) => {
-    event.preventDefault();
+    event?.preventDefault();
     auth
       .signInWithEmailAndPassword("test@lge.com", "123qwe")
       .then(() => {
@@ -60,6 +60,10 @@ function Home() {
         alert(error.message);
       });
   };
+
+  useEffect(() => {
+    signInGuest();
+  }, [])
 
   return (
     <>
